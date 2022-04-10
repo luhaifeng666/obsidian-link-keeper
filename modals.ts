@@ -114,3 +114,45 @@ export class DeleteLink extends Modal {
     this.contentEl.empty()
   }
 }
+
+// list all links
+export class ListAllLinks extends Modal {
+  options: Options
+
+  constructor (
+    app: App,
+    options: Options
+  ) {
+    super(app)
+    this.options = options
+  }
+
+  createListItem (container: Element, key: string, value: string, isLink = true) {
+    const box = container.createEl("div", { cls: `list-item ${!isLink ? 'list-item-header' : ''}`})
+      box.createEl("div", { text: key })
+      const linkBox = box.createEl("div")
+      if (isLink) {
+        linkBox.createEl('a', { text: value, href: value})
+      } else {
+        linkBox.createSpan({ text: value })
+      }
+  }
+
+  onOpen(): void {
+    const { contentEl } = this
+
+    contentEl.createEl("h1", { text: "All Links", cls: "title" })
+    
+    const contentBox = contentEl.createEl("div")
+    this.createListItem(contentBox, 'Name', 'Url', false)
+
+    const listContainer = contentBox.createEl('div', { cls: 'list-container'})
+    Object.keys(this.options).forEach(key => {
+      this.createListItem(listContainer, key, this.options[key])
+    })
+  }
+
+  onClose(): void {
+    this.contentEl.empty()
+  }
+}

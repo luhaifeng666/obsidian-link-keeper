@@ -1,5 +1,5 @@
 import { Plugin } from "obsidian"
-import { AddLink, DeleteLink } from "./modals"
+import { AddLink, DeleteLink, ListAllLinks } from "./modals"
 import { LinkKeeperSettingTab } from './settings'
 import { readFile, writeFile } from 'fs/promises'
 import { noticeHandler } from './utils'
@@ -61,21 +61,6 @@ export default class InsertLinkPlugin extends Plugin {
   }
 
   /**
-   * get the keys of all links
-   * @returns Options
-   */
-  getOptions () {
-    let options = {}
-    this.getLinks(async (data: Options) => {
-      options = Object.keys(data).reduce((obj, key) => ({
-        ...obj,
-        key
-      }), options)
-    })
-    return options
-  }
-
-  /**
    * delete link by name
    * @param name 
    */
@@ -100,6 +85,9 @@ export default class InsertLinkPlugin extends Plugin {
       case 'deleteLink':
         return new DeleteLink(this.app, options, this.onDelete.bind(this))
 
+      case 'listLink':
+        return new ListAllLinks(this.app, options)
+
       default: break
     }
   }
@@ -123,11 +111,20 @@ export default class InsertLinkPlugin extends Plugin {
       name: 'Delete link',
       callback: () => {
         this.getLinks(async (data: Options) => {
-          const options = Object.keys(data).reduce((obj, key) => ({
+          this.initModal('deleteLink', Object.keys(data).reduce((obj, key) => ({
             ...obj,
-            [key]: key
-          }), {})
-          this.initModal('deleteLink', options).open()
+            key
+          }), {})).open()
+        })
+      }
+    })
+
+    this.addCommand({
+      id: 'list-links',
+      name: 'List links',
+      callback: () => {
+        this.getLinks(async (data: Options) => {
+          this.initModal('listLink', data).open()
         })
       }
     })

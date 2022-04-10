@@ -3,3 +3,39 @@
   text-align: center;
   font-size: 20px;
 }
+
+
+.list-container {
+  max-height: 300px;
+  overflow: scroll;
+}
+
+.list-item-header {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-item div {
+  flex: 1;
+}
+
+.list-item:not(.list-item-header) div:first-child {
+  color: #222;
+  font-weight: bold;
+}
+
+.list-item div:last-child {
+  text-align: right;
+}
+
+.list-item:not(.list-item-header) {
+  background-color: #c0c0c0;
+  padding: 8px;
+  border-radius: 4px;
+}
