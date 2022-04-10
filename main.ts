@@ -97,6 +97,10 @@ export default class InsertLinkPlugin extends Plugin {
     await this.loadSettings()
     // add setting tab
     this.addSettingTab(new LinkKeeperSettingTab(this.app, this))
+    // add ribbon icon
+    this.addRibbonIcon("link", "List all links", () => {
+      this.app.commands.commands['obsidian-link-keeper:list-links'].callback()
+    });
     // add command
     this.addCommand({
       id: "add-link",
@@ -122,6 +126,7 @@ export default class InsertLinkPlugin extends Plugin {
     this.addCommand({
       id: 'list-links',
       name: 'List links',
+      icon: 'link',
       callback: () => {
         this.getLinks(async (data: Options) => {
           this.initModal('listLink', data).open()
