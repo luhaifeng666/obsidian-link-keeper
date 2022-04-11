@@ -39,3 +39,8 @@
   padding: 8px;
   border-radius: 4px;
 }
+
+.list-empty {
+  text-align: center;
+  font-size: 16px;
+}
