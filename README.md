@@ -92,7 +92,7 @@ You can delete a link by following steps.
 
 - Click the command icon in the left side menu.
 - Select a command named **Link keeper: Delete link**.
-- Fill in the link name and click the **delete button**.
+- Select a link name and click the **delete button**.
 
 ![add-link](./images/delete.png)
 
