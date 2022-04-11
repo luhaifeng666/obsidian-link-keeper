@@ -108,7 +108,6 @@ export default class InsertLinkPlugin extends Plugin {
       name: "Add link",
       editorCallback: (editor: Editor) => {
         const selection = editor.getSelection()
-        editor.replaceSelection(selection.toUpperCase())
         this.initModal('addLink', { link: selection }).open()
       }
     })
