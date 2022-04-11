@@ -1,4 +1,4 @@
-import { Plugin } from "obsidian"
+import { Plugin, Editor } from "obsidian"
 import { AddLink, DeleteLink, ListAllLinks } from "./modals"
 import { LinkKeeperSettingTab } from './settings'
 import { readFile, writeFile } from 'fs/promises'
@@ -80,7 +80,7 @@ export default class InsertLinkPlugin extends Plugin {
   initModal (type: string, options?: Options) {
     switch (type) {
       case 'addLink':
-        return new AddLink(this.app, this.onSubmit.bind(this))
+        return new AddLink(this.app, options.link, this.onSubmit.bind(this))
 
       case 'deleteLink':
         return new DeleteLink(this.app, options, this.onDelete.bind(this))
@@ -106,9 +106,11 @@ export default class InsertLinkPlugin extends Plugin {
     this.addCommand({
       id: "add-link",
       name: "Add link",
-      callback: () => {
-        this.initModal('addLink').open()
-      },
+      editorCallback: (editor: Editor) => {
+        const selection = editor.getSelection()
+        editor.replaceSelection(selection.toUpperCase())
+        this.initModal('addLink', { link: selection }).open()
+      }
     })
 
     this.addCommand({

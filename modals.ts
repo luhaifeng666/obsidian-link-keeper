@@ -14,10 +14,12 @@ export class AddLink extends Modal {
 
   constructor(
     app: App,
+    linkUrl: string,
     onSubmit: (linkName: string, linkUrl: string) => void
   ) {
     super(app)
     this.linkName = ''
+    this.linkUrl = linkUrl
     this.onSubmit = onSubmit
   }
 
