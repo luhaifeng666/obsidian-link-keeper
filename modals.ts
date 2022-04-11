@@ -129,13 +129,13 @@ export class ListAllLinks extends Modal {
 
   createListItem (container: Element, key: string, value: string, isLink = true) {
     const box = container.createEl("div", { cls: `list-item ${!isLink ? 'list-item-header' : ''}`})
-      box.createEl("div", { text: key })
-      const linkBox = box.createEl("div")
-      if (isLink) {
-        linkBox.createEl('a', { text: value, href: value})
-      } else {
-        linkBox.createSpan({ text: value })
-      }
+    box.createEl("div", { text: key })
+    const linkBox = box.createEl("div")
+    if (isLink) {
+      linkBox.createEl('a', { text: value, href: value})
+    } else {
+      linkBox.createSpan({ text: value })
+    }
   }
 
   renderList (key = ''): Element {
@@ -151,9 +151,14 @@ export class ListAllLinks extends Modal {
     this.createListItem(container, 'Name', 'Url', false)
 
     const listContainer = container.createEl('div', { cls: 'list-container'})
-    Object.keys(options).forEach(key => {
-      this.createListItem(listContainer, key, options[key])
-    })
+    const keys = Object.keys(options)
+    if (keys.length) {
+      keys.forEach(key => {
+        this.createListItem(listContainer, key, options[key])
+      })
+    } else {
+      listContainer.createEl('div', { text: 'No results!', cls: 'list-empty' })
+    }
 
     return container
   }
@@ -166,7 +171,7 @@ export class ListAllLinks extends Modal {
     let contentBox: Element = null
 
     new Setting(contentEl).setName('Search').addSearch(el => {
-      el.onChange(val => {
+      el.setPlaceholder('Input the link name...').onChange(val => {
         contentBox.empty()
         contentBox = this.renderList(val)
       })

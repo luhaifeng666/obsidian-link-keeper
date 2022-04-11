@@ -118,7 +118,7 @@ export default class InsertLinkPlugin extends Plugin {
         this.getLinks(async (data: Options) => {
           this.initModal('deleteLink', Object.keys(data).reduce((obj, key) => ({
             ...obj,
-            key
+            [key]: key
           }), {})).open()
         })
       }
