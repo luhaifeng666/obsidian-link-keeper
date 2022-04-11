@@ -138,18 +138,41 @@ export class ListAllLinks extends Modal {
       }
   }
 
+  renderList (key = ''): Element {
+    let options = this.options
+    // filter options
+    if (key) {
+      options = Object.keys(options).reduce((obj: Options, item) => {
+        if (item.includes(key)) obj = { ...obj, [item]: options[item] }
+        return obj
+      }, {})
+    }
+    const container = this.contentEl.createEl("div")
+    this.createListItem(container, 'Name', 'Url', false)
+
+    const listContainer = container.createEl('div', { cls: 'list-container'})
+    Object.keys(options).forEach(key => {
+      this.createListItem(listContainer, key, options[key])
+    })
+
+    return container
+  }
+
   onOpen(): void {
     const { contentEl } = this
 
     contentEl.createEl("h1", { text: "All Links", cls: "title" })
-    
-    const contentBox = contentEl.createEl("div")
-    this.createListItem(contentBox, 'Name', 'Url', false)
 
-    const listContainer = contentBox.createEl('div', { cls: 'list-container'})
-    Object.keys(this.options).forEach(key => {
-      this.createListItem(listContainer, key, this.options[key])
+    let contentBox: Element = null
+
+    new Setting(contentEl).setName('Search').addSearch(el => {
+      el.onChange(val => {
+        contentBox.empty()
+        contentBox = this.renderList(val)
+      })
     })
+
+    contentBox = this.renderList()
   }
 
   onClose(): void {

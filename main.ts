@@ -99,6 +99,7 @@ export default class InsertLinkPlugin extends Plugin {
     this.addSettingTab(new LinkKeeperSettingTab(this.app, this))
     // add ribbon icon
     this.addRibbonIcon("link", "List all links", () => {
+      // @ts-ignore
       this.app.commands.commands['obsidian-link-keeper:list-links'].callback()
     });
     // add command
