@@ -26,6 +26,6 @@ export class LinkKeeperSettingTab extends PluginSettingTab {
             this.plugin.settings.filepath = value
             await this.plugin.saveSettings()
           })
-      );
+      )
   }
 }

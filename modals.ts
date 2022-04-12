@@ -23,22 +23,18 @@ export class AddLink extends Modal {
     this.onSubmit = onSubmit
   }
 
-  createAddLinkForm () {}
-
-  createDeleteLinkForm () {}
-
   onOpen (): void {
     const { contentEl } = this
 
     contentEl.createEl("h1", { text: "Add Link", cls: "title" })
 
-    new Setting(contentEl).setName("Link name").addText((text) => 
+    new Setting(contentEl).setName("Link name").addText(text => 
       text.setValue(this.linkName).setPlaceholder('name').onChange((value) => {
         this.linkName = value
       })
     )
 
-    new Setting(contentEl).setName("Link url").addText((text) =>
+    new Setting(contentEl).setName("Link url").addText(text =>
       text.setValue(this.linkUrl).setPlaceholder('url').onChange((value) => {
         this.linkUrl = value
       })
@@ -50,9 +46,9 @@ export class AddLink extends Modal {
         .setCta()
         .onClick(() => {
           const { linkName, linkUrl } = this
-          if (!linkName) {
+          if (!(linkName.trim())) {
             noticeHandler('Link name is required!')
-          } else if (!linkUrl) {
+          } else if (!(linkUrl.trim())) {
             noticeHandler('Link url is required!')
           } else {
             this.close()
@@ -129,6 +125,13 @@ export class ListAllLinks extends Modal {
     this.options = options
   }
 
+  /**
+   * create list item
+   * @param container list container
+   * @param key link name
+   * @param value link url
+   * @param isLink determine whether it is a link
+   */
   createListItem (container: Element, key: string, value: string, isLink = true) {
     const box = container.createEl("div", { cls: `list-item ${!isLink ? 'list-item-header' : ''}`})
     box.createEl("div", { text: key })
