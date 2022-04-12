@@ -15,7 +15,7 @@ const DEFAULT_SETTINGS: Partial<LinkKeeperSettings> = {
   filepath: `${process.env.HOME}/etl.json`
 }
 
-export default class InsertLinkPlugin extends Plugin {
+export default class LinkKeeperPlugin extends Plugin {
   settings: LinkKeeperSettings
 
   /**
