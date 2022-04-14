@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-links-keeper",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "A plugin for obsidian to manage the link configuration.",
 	"main": "main.js",
   "type": "module",
