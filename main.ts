@@ -100,7 +100,7 @@ export default class LinkKeeperPlugin extends Plugin {
     // add ribbon icon
     this.addRibbonIcon("link", "List all links", () => {
       // @ts-ignore
-      this.app.commands.commands['obsidian-link-keeper:list-links'].callback()
+      this.app.commands.executeCommandById('obsidian-link-keeper:list-links')
     });
     // add command
     this.addCommand({
